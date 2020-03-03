@@ -29,8 +29,11 @@ So given a list of all possible values of x, We can easily calculate the CDF for
 
 ```python
 def calculate_cdf(lst, X):
-    
-    pass
+    count = 0 
+    for value in lst:
+        if value <= X:
+            count += 1
+    return round(count/len(lst), 3)
 
 # test data
 test_lst = [1,2,3]
@@ -57,8 +60,8 @@ Perform the following steps in the cell below:
 
 
 ```python
-dice_lst = None
-dice_cum = None
+dice_lst = list(range(1,7))
+dice_cum = [calculate_cdf(dice_lst, i) for i in dice_lst]
 
 dice_cum
 
@@ -79,11 +82,21 @@ Following this, we now have a list of possible values and a second list containi
 
 
 ```python
-# Your code here
+import matplotlib.pyplot as plt
 ```
 
 
-![png](index_files/index_7_0.png)
+```python
+# Your code here
+plt.bar(dice_lst, dice_cum)
+plt.xlabel('Dice Values')
+plt.ylabel('Cumulative Probabilities')
+plt.title('Dice Roll, Cumulative Distribution Function')
+plt.show()
+```
+
+
+![png](index_files/index_8_0.png)
 
 
 ## Level Up (optional)
@@ -98,13 +111,30 @@ You would need to perform these steps
 
 
 ```python
-# Your code here
+import numpy as np
+sample = [1,2,3,4,5,6]
+hist = np.histogram(sample, bins=6, range=(1,7), normed=True)
+plt.scatter(hist[1][:-1], np.cumsum(hist[0]))
+plt.title ("Dice Roll -  Cumulative Distribution Function");
+plt.xlabel("Dice Values")
+plt.ylabel("Cumulative Probability")
+plt.yticks(np.linspace(0,1,num=7))
+plt.show()
 ```
 
+    C:\Users\FlatIron_User\.conda\envs\learn-env\lib\site-packages\ipykernel_launcher.py:3: VisibleDeprecationWarning: Passing `normed=True` on non-uniform bins has always been broken, and computes neither the probability density function nor the probability mass function. The result is only correct if the bins are uniform, when density=True will produce the same result anyway. The argument will be removed in a future version of numpy.
+      This is separate from the ipykernel package so we can avoid doing imports until
+    
 
-![png](index_files/index_9_0.png)
+
+![png](index_files/index_10_1.png)
 
 
 ## Summary 
 
 In this lesson, we looked at developing a CDF - a percentile function of a discrete random variable. We looked at how to calculate and visualize a CDF. This technique can also be applied to continuous random variables which we shall see later in this section. 
+
+
+```python
+
+```
